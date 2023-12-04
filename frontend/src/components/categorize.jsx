@@ -78,6 +78,7 @@ const Categorize = () => {
       // console.log( 'arjun 2', items);
       // console.log( 'arjun 2', items);
       // console.log( 'arjun 2', items);
+      // console.log( 'arjun 2', items);
       
 
     }
