@@ -77,6 +77,7 @@ const Categorize = () => {
       setAllItems(items)
       // console.log( 'arjun 2', items);
       // console.log( 'arjun 2', items);
+      // console.log( 'arjun 2', items);
 
     }
   };
