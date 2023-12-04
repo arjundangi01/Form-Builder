@@ -6,7 +6,7 @@ const Categorize = () => {
   const [allCategoriesInputValues, setAllCategoriesInputValues] = useState([
     "",
   ]);
-  const [allItems, setAllItems] = useState([{}]);
+  const [allItems, setAllItems] = useState([{id:100}]);
   const handleInputChange = (index, value) => {
     // console.log(value);
     const newInputValues = [...allCategoriesInputValues];
@@ -38,23 +38,45 @@ const Categorize = () => {
   };
   const onDragEnd = (result) => {
     const { source, destination } = result;
-    if (!destination) {
+    console.log('arjun',source,destination)
+    if (!destination || !source || destination==null ) {
+     
       return;
     }
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
+    if (destination.droppableId != source.droppableId) {
+     
+
+      return
     }
+    // if (
+    //   destination.droppableId === source.droppableId &&
+    //   destination.index === source.index
+    // ) {
+    //   console.log('arjun')
+
+    //   return;
+    // }
     let temp;
-    let categories = [...allCategoriesInputValues];
-    if (source.droppableId == destination.droppableId) {
-      console.log('in')
+    let temp2 ={} ;
+    let categories = allCategoriesInputValues;
+    let items = [...allItems];
+    if (
+      source.droppableId == "category" &&
+      destination.droppableId == "category"
+    ) {
       temp = categories[source.index];
       categories[source.index] = categories[destination.index];
       categories[destination.index] = temp;
-      setAllCategoriesInputValues(categories);
+    }
+    if (source.droppableId == "item" && destination.droppableId == "item") {
+     
+      temp2 = items[source.index];
+      console.log('arjun 2',items[source.index],items[destination.index])
+      items[source.index] = items[destination.index];
+      items[destination.index] = temp2;
+      setAllItems(items)
+      // console.log( 'arjun 2', items);
+
     }
   };
   return (
@@ -119,7 +141,7 @@ const Categorize = () => {
             <h1>All Items</h1>
             <button
               onClick={() =>
-                setAllItems([...allItems, { itemValue: "", belongTo: "" }])
+                setAllItems([...allItems, { itemValue: "", belongTo: "" ,id:Date.now()}])
               }
               className="block border bg-blue-400 text-white px-2 py-1 rounded-lg mb-3 hover:bg-blue-500"
             >
@@ -139,40 +161,60 @@ const Categorize = () => {
               <div
                 ref={provided.innerRef}
                 {...provided.droppableProps}
-                className="grid grid-cols-2  gap-3"
+                className=""
               >
                 {allItems.map((item, index) => (
-                  <>
-                    <input
-                      type="text"
-                      value={item.itemValue}
-                      onChange={(e) =>
-                        onItemValueChange(index, e.target.value, "itemValue")
-                      }
-                      className="h-10 border ps-3"
-                    />
-                    <div className="flex items-center gap-3">
-                      <select
-                        name=""
-                        id=""
-                        className="border"
-                        value={item.belongTo}
-                        onChange={(e) =>
-                          onItemValueChange(index, e.target.value, "belongTo")
-                        }
+                  <Draggable index={index} draggableId={item.id.toString()}>
+                    {(provided) => (
+                      <div
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        className="flex gap-3 mt-2 mb-1 items-center"
                       >
-                        <option value="">Choose Category</option>
-                        {allCategoriesInputValues.map(
-                          (value) =>
-                            value && <option value={value}> {value} </option>
-                        )}
-                      </select>
-                      <MdDelete
-                        onClick={() => onDeleteItem(index)}
-                        className="text-red-500 text-lg "
-                      />
-                    </div>
-                  </>
+                        <MdOutlineDragHandle />
+                        <input
+                          type="text"
+                          value={item.itemValue}
+                          onChange={(e) =>
+                            onItemValueChange(
+                              index,
+                              e.target.value,
+                              "itemValue"
+                            )
+                          }
+                          className="h-10 border ps-3"
+                        />
+                        <div className="flex items-center gap-3">
+                          <select
+                            name=""
+                            id=""
+                            className="border"
+                            value={item.belongTo}
+                            onChange={(e) =>
+                              onItemValueChange(
+                                index,
+                                e.target.value,
+                                "belongTo"
+                              )
+                            }
+                          >
+                            <option value="">Choose Category</option>
+                            {allCategoriesInputValues.map(
+                              (value) =>
+                                value && (
+                                  <option value={value}> {value} </option>
+                                )
+                            )}
+                          </select>
+                          <MdDelete
+                            onClick={() => onDeleteItem(index)}
+                            className="text-red-500 text-lg "
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </Draggable>
                 ))}
                 {provided.placeholder}
               </div>
