@@ -19,9 +19,9 @@ const Create = () => {
   return (
     
       <main className="w-[60%] m-auto mt-20">
-        <Categorize />
-        {/* <Cloze />
-      <Comprehension /> */}
+        {/* <Categorize /> */}
+        {/* <Cloze /> */}
+      <Comprehension />
       </main>
    
   );
