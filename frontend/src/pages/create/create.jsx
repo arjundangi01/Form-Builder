@@ -4,8 +4,7 @@ import Cloze from "../../components/cloze";
 import Comprehension from "../../components/comprehension";
 import { DragDropContext } from "react-beautiful-dnd";
 // --
-// --
-// --
+
 const Create = () => {
   const [allQuestionType, setAllQuestionType] = useState([
     { type: "categorize" },
