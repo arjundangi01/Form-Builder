@@ -7,13 +7,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 // --
 // --
 // --
-// --
-// --
-// --
-// --
-// --
-// --
-// --
+
 
 const Create = () => {
   const [allQuestionType, setAllQuestionType] = useState([
